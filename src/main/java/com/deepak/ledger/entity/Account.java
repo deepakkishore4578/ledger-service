@@ -59,4 +59,31 @@ public class Account {
     public boolean isAllowNegative() {
         return allowNegative;
     }
+
+    public void debit(long amountPaise) {
+        if (amountPaise <= 0) {
+            throw new IllegalArgumentException(
+                    "Amount must be positive"
+            );
+        }
+
+        if (!allowNegative && amountPaise > balancePaise) {
+            throw new IllegalStateException(
+                    "Insufficient funds"
+            );
+        }
+
+        balancePaise -= amountPaise;
+    }
+
+    public void credit(long amountPaise) {
+        if (amountPaise <= 0) {
+            throw new IllegalArgumentException(
+                    "Amount must be positive"
+            );
+        }
+
+        balancePaise = Math.addExact(balancePaise, amountPaise);
+    }
+
 }
